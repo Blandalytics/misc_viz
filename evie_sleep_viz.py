@@ -43,12 +43,10 @@ time_df['asleep'] = time_df['asleep'].fillna(method='bfill').fillna(1).astype('i
 # Weigh the df by how recent the date is (how many weeks ago)
 time_df['weight'] = (time_df['date'].max() - time_df['date']) / np.timedelta64(1, 'D') / 7
 time_df['weight'] = time_df['weight'].astype('int').max() - time_df['weight'].astype('int') + 1
-weighted_time_df = time_df.loc[time_df.index.repeat(time_df.weight)][['time','asleep']].reset_index(drop=True)
+time_df = time_df.loc[time_df.index.repeat(time_df.weight)][['time','asleep']].reset_index(drop=True)
 
-model = XGBClassifier(objective='binary:logistic',
-                      tree_method='hist',
-                      seed=12)
-model.fit(weighted_time_df['time'],weighted_time_df['asleep'])
+model = XGBClassifier(objective='binary:logistic')
+model.fit(time_df['time'],time_df['asleep'])
 
 pred_df = pd.DataFrame(range(0,1440), columns=['time'])
 pred_df[['pred_awake','pred_asleep']] = model.predict_proba(pred_df['time'])
