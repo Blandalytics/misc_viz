@@ -45,9 +45,17 @@ time_df['weight'] = (time_df['date'].max() - time_df['date']) / np.timedelta64(1
 time_df['weight'] = time_df['weight'].astype('int').max() - time_df['weight'].astype('int') + 1
 time_df = time_df.loc[time_df.index.repeat(time_df.weight)][['time','asleep']].reset_index(drop=True)
 
-model = xgb.XGBClassifier()
-model.fit(time_df['time'],time_df['asleep'])
+# Streamlit needs a workaround for xgboost model training
+@st.cache(hash_funcs={XGBClassifier: id})
+def train_and_predict_class(xtrain, ytrain):
+    try:
+        model = xgb.XGBClassifier(objective='binary:logistic')
+        model.fit(xtrain,ytrain)
+    except ValueError as er:
+        st.error(er)
 
+train_and_predict_class(time_df['time'],time_df['asleep'])
+        
 pred_df = pd.DataFrame(range(0,1440), columns=['time'])
 pred_df[['pred_awake','pred_asleep']] = model.predict_proba(pred_df['time'])
 pred_df = pred_df.sort_values('time')
