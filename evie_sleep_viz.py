@@ -45,7 +45,7 @@ time_df['weight'] = (time_df['date'].max() - time_df['date']) / np.timedelta64(1
 time_df['weight'] = time_df['weight'].astype('int').max() - time_df['weight'].astype('int') + 1
 time_df = time_df.loc[time_df.index.repeat(time_df.weight)][['time','asleep']].reset_index(drop=True)
 
-model = xgb.XGBClassifier(objective='binary:logistic')
+model = xgb.XGBClassifier()
 model.fit(time_df['time'],time_df['asleep'])
 
 pred_df = pd.DataFrame(range(0,1440), columns=['time'])
