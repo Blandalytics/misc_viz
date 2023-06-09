@@ -51,6 +51,7 @@ def train_and_predict_class(xtrain, ytrain):
     try:
         model = xgb.XGBClassifier(objective='binary:logistic')
         model.fit(xtrain,ytrain)
+        return model
     except ValueError as er:
         st.error(er)
 
