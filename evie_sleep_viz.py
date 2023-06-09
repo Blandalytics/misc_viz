@@ -5,7 +5,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 # import seaborn as sns
 from datetime import date, timedelta
-from xgboost import XGBClassifier
+import xgboost as xgb
 import plotly.graph_objects as go
 import time
 
@@ -45,7 +45,7 @@ time_df['weight'] = (time_df['date'].max() - time_df['date']) / np.timedelta64(1
 time_df['weight'] = time_df['weight'].astype('int').max() - time_df['weight'].astype('int') + 1
 time_df = time_df.loc[time_df.index.repeat(time_df.weight)][['time','asleep']].reset_index(drop=True)
 
-model = XGBClassifier(objective='binary:logistic')
+model = xgb.XGBClassifier(objective='binary:logistic')
 model.fit(time_df['time'],time_df['asleep'])
 
 pred_df = pd.DataFrame(range(0,1440), columns=['time'])
