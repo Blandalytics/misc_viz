@@ -45,6 +45,8 @@ time_df['weight'] = (time_df['date'].max() - time_df['date']) / np.timedelta64(1
 time_df['weight'] = time_df['weight'].astype('int').max() - time_df['weight'].astype('int') + 1
 time_df = time_df.loc[time_df.index.repeat(time_df.weight)][['time','asleep']].reset_index(drop=True)
 
+st.dataframe(time_df)
+
 # Streamlit needs a workaround for xgboost model training
 @st.cache_resource()
 def train_and_predict_class(xtrain, ytrain):
