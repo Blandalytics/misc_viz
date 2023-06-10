@@ -57,7 +57,7 @@ time_df = time_df.loc[time_df.index.repeat(time_df.weight)][['time','asleep']].r
 #     return pred_df
 
 # pred_df = train_model()
-model = xgb.XGBClassifier(objective='binary:logistic
+model = xgb.XGBClassifier(objective='binary:logistic',
                           seed=12)
 model.fit(time_df['time'],time_df['asleep'])
     
