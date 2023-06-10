@@ -47,16 +47,22 @@ time_df = time_df.loc[time_df.index.repeat(time_df.weight)][['time','asleep']].r
 
 # Streamlit needs a workaround for xgboost model training
 # @st.cache_data
-def train_model():
-    model = xgb.XGBClassifier()
-    model.fit(time_df['time'],time_df['asleep'])
+# def train_model():
+#     model = xgb.XGBClassifier()
+#     model.fit(time_df['time'],time_df['asleep'])
     
-    pred_df = pd.DataFrame(range(0,1440), columns=['time'])
-    pred_df[['pred_awake','pred_asleep']] = model.predict_proba(pred_df['time'])
+#     pred_df = pd.DataFrame(range(0,1440), columns=['time'])
+#     pred_df[['pred_awake','pred_asleep']] = model.predict_proba(pred_df['time'])
     
-    return pred_df
+#     return pred_df
 
-pred_df = train_model()
+# pred_df = train_model()
+model = xgb.XGBClassifier(objective='binary:logistic
+                          seed=12)
+model.fit(time_df['time'],time_df['asleep'])
+    
+pred_df = pd.DataFrame(range(0,1440), columns=['time'])
+pred_df[['pred_awake','pred_asleep']] = model.predict_proba(pred_df['time'])
 
 pred_df = pred_df.sort_values('time')
 pred_df = pd.concat([pred_df.drop(columns=['time']),
