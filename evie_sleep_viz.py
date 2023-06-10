@@ -46,16 +46,18 @@ time_df['weight'] = time_df['weight'].astype('int').max() - time_df['weight'].as
 time_df = time_df.loc[time_df.index.repeat(time_df.weight)][['time','asleep']].reset_index(drop=True)
 
 # Streamlit needs a workaround for xgboost model training
-@st.cache_resource
+@st.cache_data
 def train_model(xtrain, ytrain):
     model = xgb.XGBClassifier()
     model.fit(xtrain,ytrain)
-    return model
+    
+    pred_df = pd.DataFrame(range(0,1440), columns=['time'])
+    pred_df[['pred_awake','pred_asleep']] = model.predict_proba(pred_df['time'])
+    
+    return pred_df
 
-model = train_model(time_df['time'],time_df['asleep'])
-        
-pred_df = pd.DataFrame(range(0,1440), columns=['time'])
-pred_df[['pred_awake','pred_asleep']] = model.predict_proba(pred_df['time'])
+pred_df = train_model(time_df['time'],time_df['asleep'])
+
 pred_df = pred_df.sort_values('time')
 pred_df = pd.concat([pred_df.drop(columns=['time']),
                      pred_df])
