@@ -97,9 +97,9 @@ fig.update_layout(
     font=dict(
         size=18
     ),
-    autosize=False,
-    width=550,
-    height=800,
+    autosize=True,
+#     width=550,
+#     height=800,
     margin=dict(
         l=75,
         r=25,
