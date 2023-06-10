@@ -48,12 +48,9 @@ time_df = time_df.loc[time_df.index.repeat(time_df.weight)][['time','asleep']].r
 # Streamlit needs a workaround for xgboost model training
 @st.cache_resource
 def train_model(xtrain, ytrain):
-    try:
-        model = xgb.XGBClassifier()
-        model.fit(xtrain,ytrain)
-        return model
-    except ValueError as er:
-        st.error(er)
+    model = xgb.XGBClassifier()
+    model.fit(xtrain,ytrain)
+    return model
 
 model = train_model(time_df['time'],time_df['asleep'])
         
