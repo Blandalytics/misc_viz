@@ -106,7 +106,7 @@ fig.update_layout(
 #         b=10,
 #         t=50,
 #         pad=0
-    ),
+#     ),
 )
 
 st.plotly_chart(fig)
