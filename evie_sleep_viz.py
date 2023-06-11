@@ -90,16 +90,16 @@ fig.update_layout(
     font=dict(
         size=18
     ),
-#     autosize=True,
-#     width=550,
-#     height=800,
-#     margin=dict(
-#         l=75,
-#         r=25,
-#         b=10,
-#         t=50,
-#         pad=0
-#     ),
+    autosize=Falsee,
+    width=550,
+    height=800,
+    margin=dict(
+        l=75,
+        r=25,
+        b=10,
+        t=50,
+        pad=0
+    ),
 )
 
 st.plotly_chart(fig)
