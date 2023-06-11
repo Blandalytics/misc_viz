@@ -82,7 +82,7 @@ fig.update_xaxes(range=[0,1],
 
 fig.update_layout(
     title={
-        'text': f"Likelihood of Evie Being Asleep/nby Hour",
+        'text': f"Likelihood of Evie Being Asleep\nby Hour",
         'y':0.95,
         'x':0.5,
         'xanchor': 'center',
