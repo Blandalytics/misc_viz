@@ -92,7 +92,7 @@ fig.update_layout(
     ),
     autosize=False,
     width=550,
-    height=800,
+    height=450,
     margin=dict(
         l=75,
         r=25,
