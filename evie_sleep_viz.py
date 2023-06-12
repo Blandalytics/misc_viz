@@ -65,7 +65,7 @@ pred_df['pred_awake'] = 1 - pred_df['pred_asleep']
 pred_df = pred_df.dropna(subset='time')
 pred_df['time_label'] = pred_df['time'].apply(lambda x: time.strftime("%M:%S", time.gmtime(x)))
 
-fig = go.Figure([go.Bar(y=pred_df['time_label'], x=pred_df.assign(filler = 1)['filler'],
+fig = go.Figure([go.Bar(y=pred_df['time_label'], x=pred_df.assign(filler = -1)['filler'],
                         hovertemplate = '<b>%{y}</b><br>Likelihood: %{customdata:.1f}%<br><extra></extra>',
                         marker=dict(color=pred_df['pred_asleep'],
                                     colorscale=['#a9373b', '#faf5f5', '#2369bd'],
@@ -77,7 +77,7 @@ fig = go.Figure([go.Bar(y=pred_df['time_label'], x=pred_df.assign(filler = 1)['f
                         orientation='h'
              )])
 fig.update_yaxes(tickvals=[x*60 for x in range(0,24)])
-fig.update_xaxes(range=[0,1],
+fig.update_xaxes(range=[-1,0],
                  showticklabels=False)
 
 fig.update_layout(
