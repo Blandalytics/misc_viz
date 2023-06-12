@@ -82,7 +82,7 @@ fig.update_xaxes(range=[0,1],
 
 fig.update_layout(
     title={
-        'text': f"Likelihood of Evie<br>Being Asleep",
+        'text': f"<br>Likelihood of Evie<br>Being Asleep",
         'y':0.96,
         'x':0.5,
         'xanchor': 'center',
@@ -90,16 +90,16 @@ fig.update_layout(
     font=dict(
         size=18
     ),
-    autosize=True,
-#     width=300,
-#     height=450,
-#     margin=dict(
-#         l=75,
-#         r=25,
-#         b=10,
-#         t=50,
-#         pad=0
-#     ),
+    autosize=False,
+    width=300,
+    height=450,
+    margin=dict(
+        l=75,
+        r=25,
+        b=10,
+        t=50,
+        pad=0
+    ),
 )
 
 st.plotly_chart(fig)
